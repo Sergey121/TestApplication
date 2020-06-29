@@ -34,13 +34,15 @@ export const Modal = (props: Props) => {
     });
   }, [onSave, name, phone, email]);
 
+  const disabled = !(name || phone || email);
+
   return (
     <div className={styles.modal}>
       <div className={styles.content}>
         <span className={styles.close} onClick={onClose}>&times;</span>
         <Tabs data={tabs}/>
         <div>
-          {isEdit ? <button type={'button'}>Edit</button> : <button type={'button'} onClick={handleAdd}>Add</button>}
+          {isEdit ? <button disabled={disabled} type={'button'}>Edit</button> : <button disabled={disabled} type={'button'} onClick={handleAdd}>Add</button>}
           <button type={'button'} onClick={onClose}>Cancel</button>
         </div>
       </div>

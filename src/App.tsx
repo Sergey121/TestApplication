@@ -3,6 +3,7 @@ import styles from './app.module.scss';
 import { addRecord, editRecord, initialState, reducer } from './reducer/index';
 import { Modal } from './components/modal/index';
 import { Record } from './models/index';
+import { Table } from './components/table/index';
 
 
 export default () => {
@@ -30,6 +31,7 @@ export default () => {
     <div>
       <button type={'button'} onClick={handleOpenModal}>Add Record</button>
       {showModal && <Modal onSave={handleSave} onClose={handleClose}/>}
+      <Table data={records}/>
     </div>
   );
 };
