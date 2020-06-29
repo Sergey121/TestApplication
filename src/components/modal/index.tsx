@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import styles from './modal.module.scss';
 import { Tabs } from '../tabs/index';
 import { Input } from '../input/index';
@@ -7,17 +7,17 @@ import { Record } from '../../models/index';
 type Props = {
   item?: Record;
   onClose: () => void;
+  onSave: (record: Record) => void;
 };
 
 export const Modal = (props: Props) => {
-  const record = props.item;
+  const { onClose, onSave, item: record } = props;
   const isEdit = !!record;
 
   const [name, setName] = useState(record?.name || '');
   const [email, setEmail] = useState(record?.email || '');
   const [phone, setPhone] = useState(record?.phone || '');
 
-  const { onClose } = props;
 
   const tabs = useMemo(() => [
     { id: 'name', title: 'Name', content: <Input value={name} onChange={setName}/> },
@@ -25,7 +25,14 @@ export const Modal = (props: Props) => {
     { id: 'email', title: 'Email', content: <Input value={email} onChange={setEmail}/> },
   ], [name, phone, email]);
 
-  const handleAdd = () => {};
+  const handleAdd = useCallback(() => {
+    onSave({
+      ...record,
+      name,
+      phone,
+      email,
+    });
+  }, [onSave, name, phone, email]);
 
   return (
     <div className={styles.modal}>
