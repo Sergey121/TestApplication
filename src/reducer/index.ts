@@ -10,9 +10,9 @@ const KEY = 'records';
 
 export const initialState = JSON.parse(window.localStorage.getItem(KEY)) || [];
 
-const ADD_RECORD = '';
-const EDIT_RECORD = '';
-const REMOVE_RECORD = '';
+const ADD_RECORD = 'ADD_RECORD';
+const EDIT_RECORD = 'EDIT_RECORD';
+const REMOVE_RECORD = 'REMOVE_RECORD';
 
 export function reducer(state: State, action: Action) {
   let newState = state;

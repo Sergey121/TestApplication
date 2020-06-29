@@ -1,6 +1,5 @@
-import React, { Component, useCallback, useReducer, useState } from 'react';
-import styles from './app.module.scss';
-import { addRecord, editRecord, initialState, reducer } from './reducer/index';
+import React, { useCallback, useReducer, useState } from 'react';
+import { addRecord, editRecord, initialState, reducer, removeRecord } from './reducer/index';
 import { Modal } from './components/modal/index';
 import { Record } from './models/index';
 import { Table } from './components/table/index';
@@ -9,6 +8,7 @@ import { Table } from './components/table/index';
 export default () => {
   const [records, dispatch] = useReducer(reducer, initialState);
   const [showModal, setShowModal] = useState(false);
+  const [selectedRecord, setSelected] = useState(null);
 
   const handleOpenModal = useCallback(() => {
     setShowModal(true);
@@ -16,6 +16,7 @@ export default () => {
 
   const handleClose = useCallback(() => {
     setShowModal(false);
+    setSelected(null);
   }, [setShowModal, showModal]);
 
   const handleSave = (record: Record) => {
@@ -24,14 +25,23 @@ export default () => {
     } else {
       dispatch(addRecord(record));
     }
-    setShowModal(false);
+    handleClose();
   };
+
+  const handleEdit = useCallback((item: Record) => {
+    setSelected(item);
+    handleOpenModal();
+  }, []);
+
+  const handleDelete = useCallback((item: Record) => {
+    dispatch(removeRecord(item));
+  }, [dispatch]);
 
   return (
     <div>
       <button type={'button'} onClick={handleOpenModal}>Add Record</button>
-      {showModal && <Modal onSave={handleSave} onClose={handleClose}/>}
-      <Table data={records}/>
+      {showModal && <Modal item={selectedRecord} onSave={handleSave} onClose={handleClose}/>}
+      <Table onEdit={handleEdit} onDelete={handleDelete} data={records}/>
     </div>
   );
 };
