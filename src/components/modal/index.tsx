@@ -3,6 +3,7 @@ import styles from './modal.module.scss';
 import { Tabs } from '../tabs/index';
 import { Input } from '../input/index';
 import { Record } from '../../models/index';
+import { Button } from '../button/index';
 
 type Props = {
   item?: Record;
@@ -41,9 +42,10 @@ export const Modal = (props: Props) => {
       <div className={styles.content}>
         <span className={styles.close} onClick={onClose}>&times;</span>
         <Tabs data={tabs}/>
-        <div>
-          {isEdit ? <button disabled={disabled} onClick={handleAdd} type={'button'}>Edit</button> : <button disabled={disabled} type={'button'} onClick={handleAdd}>Add</button>}
-          <button type={'button'} onClick={onClose}>Cancel</button>
+        <div className={styles.actions}>
+          {isEdit ? <Button disabled={disabled} onClick={handleAdd} title={'Edit'}/> :
+            <Button disabled={disabled} title={'Add'} onClick={handleAdd}/>}
+          <Button className={styles.cancel} color={'secondary'} onClick={onClose} title={'Cancel'}/>
         </div>
       </div>
     </div>

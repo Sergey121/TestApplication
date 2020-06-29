@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { Record } from '../../models/index';
 import { Icon } from '../icon/index';
+import styles from './table.module.scss';
 
 type Props = {
   data: Record[];
@@ -27,25 +28,27 @@ export const Table = (props: Props) => {
   }, [onDelete]);
 
   return (
-    <table>
+    <table className={styles.table}>
       <thead>
       <tr>
-        <td>Name</td>
-        <td>Phone</td>
-        <td>Email</td>
-        <td>Actions</td>
+        <th className={styles.th}>Name</th>
+        <th className={styles.th}>Phone</th>
+        <th className={styles.th}>Email</th>
+        <th className={styles.th}>Actions</th>
       </tr>
       </thead>
       <tbody>
       {data.map(item => {
         return (
-          <tr key={item.id}>
-            <td>{item.name}</td>
-            <td>{item.phone}</td>
-            <td>{item.email}</td>
-            <td>
-              <Icon name={'create'} onPress={handleEdit(item)}/>
-              <Icon name={'delete'} onPress={handleDelete(item)}/>
+          <tr className={styles.tr} key={item.id}>
+            <td className={styles.td}>{item.name}</td>
+            <td className={styles.td}>{item.phone}</td>
+            <td className={styles.td}>{item.email}</td>
+            <td className={styles.td}>
+              <div className={styles.actions}>
+                <Icon name={'create'} onPress={handleEdit(item)}/>
+                <Icon name={'delete'} onPress={handleDelete(item)}/>
+              </div>
             </td>
           </tr>
         );

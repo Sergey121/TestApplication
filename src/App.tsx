@@ -3,6 +3,7 @@ import { addRecord, editRecord, initialState, reducer, removeRecord } from './re
 import { Modal } from './components/modal/index';
 import { Record } from './models/index';
 import { Table } from './components/table/index';
+import { Button } from './components/button/index';
 
 
 export default () => {
@@ -39,7 +40,7 @@ export default () => {
 
   return (
     <div>
-      <button type={'button'} onClick={handleOpenModal}>Add Record</button>
+      <Button onClick={handleOpenModal} title={'Add Record'}/>
       {showModal && <Modal item={selectedRecord} onSave={handleSave} onClose={handleClose}/>}
       <Table onEdit={handleEdit} onDelete={handleDelete} data={records}/>
     </div>
